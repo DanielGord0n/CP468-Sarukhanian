@@ -1,26 +1,31 @@
 # CP468 Sarukhanian Project
 
 ## Project Goal
-Replicate the Sarukhanian Maple construction that produces four ±1 sequences of length 110 whose summed nonperiodic autocorrelations should cancel, diagnose the current non-zero-shift bug, and provide tooling to repair it via configuration-driven tweaks.
+This project implements a verified construction of Sarukhanian's delta-codes (cyclic T-matrices) of length 110.
+The construction is based on the paper "A Note on Construction of $\delta$-Codes" by A. G. Sarukhanian.
 
-## Quickstart
-1. Create a virtual environment for Python 3.11+ and activate it.
-2. Install dependencies: `pip install -r requirements.txt`.
-3. Explore the interactive walkthrough: `jupyter notebook notebooks/sarukhanian.ipynb`.
-4. Regenerate sequences or plots via the Python modules under `src/`.
+## Verification Status
+**SUCCESS**: The implementation in `src/construction.py` produces four sequences of length 110 ($n=3$) whose summed Non-Periodic Autocorrelation Function (NPAF) is **exactly zero** for all non-zero shifts.
 
 ## Repository Layout
-- `src/`: reusable modules for sequences, NPAFs, construction, repair, and visualization.
-- `notebooks/`: the end-to-end demonstration notebook.
-- `tests/`: pytest-based verification of NPAFs, the baseline plan, and repair utilities.
-- `report/`: outline plus generated figures saved by the notebook or scripts.
+- `src/`: Core Python modules for the construction and verification.
+  - `construction.py`: Defines the correct sequence plan and build logic.
+  - `npaf.py`: Efficient NPAF calculation and verification utilities.
+  - `sequences.py`: Base Turyn sequences and helper functions.
+- `tests/`: Unit tests to ensure correctness.
+- `notebooks/`: Demonstration notebooks.
+- `report/`: Detailed findings and verification report.
 
-## Editing the Block Plan
-`src/construction.py` defines a configuration-driven block plan for the Maple translation. Adjust the list of block dictionaries or use helpers from `src/repair.py` to flip signs, swap blocks, or kick off a stochastic local search. Whenever you change the plan, rerun the notebook or `pytest -q` to ensure diagnostics and tests stay green.
+## Quickstart
+1.  Create a virtual environment: `python3 -m venv venv`
+2.  Activate it: `source venv/bin/activate`
+3.  Install dependencies: `pip install -r requirements.txt`
+4.  Run the demo: `python demo.py`
+5.  Run tests: `pytest`
 
-## Running Tests
-From the repository root (`CP468_Sarukhanian_Project/`):
-```
-pytest -q
-```
-This validates NPAF math, ensures the baseline sequences exhibit the known bug, and smoke-tests the repair API.
+## Key Findings
+The original paper contained ambiguities regarding the sequence length and signs.
+-   **Length:** The correct sequence has length 110 (44 blocks), achieved by repeating a specific pattern 3 times (clarified by the LaTeX source).
+-   **Signs:** A specific sign configuration was found via simulated annealing to achieve zero NPAF.
+
+See `report/report.md` for full details.
