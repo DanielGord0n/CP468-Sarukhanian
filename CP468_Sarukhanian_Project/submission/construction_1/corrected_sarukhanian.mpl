@@ -1,4 +1,4 @@
-> restart;
+restart;
 unprotect('D');
 NPAF := proc(a,s)
 local i,j,n,npaf;
@@ -10,7 +10,7 @@ od;
 RETURN(npaf);
 end proc;
 
-> n := 3;
+n := 3;
 A := Matrix(1,n,[1, 1, 1]);
 B := Matrix(1,n,[1, 1,-1]);
 C := Matrix(1,n-1,[1,-1]);
@@ -20,12 +20,12 @@ rB := Matrix(1,n,ListTools[Reverse]([1, 1,-1]));
 rC := Matrix(1,n-1,ListTools[Reverse]([1,-1]));
 rD := Matrix(1,n-1,ListTools[Reverse]([1,-1]));
 
-> x := Matrix(4,1,[1,1,1,1]);
+x := Matrix(4,1,[1,1,1,1]);
 y := Matrix(4,1,[1,1,-1,-1]);
 z := Matrix(4,1,[-1,1,-1,1]);
 w := Matrix(4,1,[-1,1,1,-1]);
 
-> # --- CORRECTED DEFINITIONS ---
+# --- CORRECTED DEFINITIONS ---
 mwB := -w.B;
 mwC := -w.C;
 mwD := -w.D;
@@ -51,19 +51,19 @@ yrC := y.rC;
 zA := z.A;
 zC := z.C;
 
-> # --- CORRECTED SEQUENCE CONSTRUCTION ---
+# --- CORRECTED SEQUENCE CONSTRUCTION ---
 # This sequence has length 110 and zero NPAF.
 X_saru := ArrayTools[Concatenate](2,
 xA, xC, mxA, mxC, mxrB, mxC, mxA, xC, yA, xD, yA, xD, yA, xD, yB, yD, myB, yrC, myB, yD, yB, myD, zA, zC, mzA, mzrD, mzA, zC, zA, mzC, mzB, mwC, mzB, mwC, mzB, mwC, wB, wD, mwB, mwD, wrA, mwD, mwB, wD
 );
 
-> X := convert(LinearAlgebra[Row](X_saru,1),list);
-> Y := convert(LinearAlgebra[Row](X_saru,2),list);
-> Z := convert(LinearAlgebra[Row](X_saru,3),list);
-> W := convert(LinearAlgebra[Row](X_saru,4),list);
+X := convert(LinearAlgebra[Row](X_saru,1),list);
+Y := convert(LinearAlgebra[Row](X_saru,2),list);
+Z := convert(LinearAlgebra[Row](X_saru,3),list);
+W := convert(LinearAlgebra[Row](X_saru,4),list);
 
-> map(nops,[X,Y,Z,W]);
+map(nops,[X,Y,Z,W]);
 
-> for s from 1 to 109 do
+for s from 1 to 109 do
 s, NPAF(X,s)+NPAF(Y,s)+NPAF(Z,s)+NPAF(W,s);
 od;
